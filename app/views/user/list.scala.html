@@ -1,0 +1,40 @@
+@(users: List[UserViewProfile], username: Option[String])
+
+@main(Html("Search result"), username) {
+    @users match {
+    case Nil => {<div>Users not found</div>}
+        case _ => {
+            <table class="table table-hover">
+
+                <tbody>
+                    <tr>
+                        <th>User name</th>
+                        <th>Country</th>
+                        <th>Gender</th>
+                        <th>Professional</th>
+                    </tr>
+                    @for(user <- users) {
+                        <tr row-key="@user.id">
+                            <td>@user.username</td>
+                            <td><div>@user.profile.country.getOrElse(<em>Not specified</em>)</div></td>
+                            <td><div>@user.profile.gender.getOrElse(<em>Not specified</em>)</div></td>
+                            <td><div>@user.profile.professional.getOrElse(<em>Not specified</em>)</div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    <script type="text/javascript" charset="utf-8">
+    $ ( function ( ) {
+    $ ( '.table-hover tr' ).click ( function ( ) {
+    var rowId = $ ( this ).attr ( "row-key" ) ;
+        if(rowId)
+        {
+            console.log(rowId)
+            window.location.href = "/user/" + rowId
+        }
+    } ) ;
+    } ) ;
+    </script>
+}

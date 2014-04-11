@@ -1,0 +1,28 @@
+@main(Html("Jungle O"), None) {
+
+    <div id="this-carousel-id" class="carousel slide">
+        <div class="carousel-inner">
+
+            <div class="item active">
+                <img src="@routes.Assets.at("images/main_image1.jpg")" alt="" />
+                <div class="carousel-caption">
+                    <p>Real indices</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="@routes.Assets.at("images/main_image2.jpg")" alt="" />
+                <div class="carousel-caption">
+                    <p>Real time updates</p>
+                </div>
+            </div>
+            <div class="item">
+                <img src="@routes.Assets.at("images/main_image3.jpg")" alt="" />
+                <div class="carousel-caption">
+                    <p>Interactive technologies</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+    </div>
+}

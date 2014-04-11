@@ -1,0 +1,87 @@
+@(title: Html, username: Option[String])(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Jungle O</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-new.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/bootstrap.js")" type="text/javascript"></script>
+    </head>
+    <body>
+
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <a class="brand" href="/">Jungle O</a>
+                <ul class="nav">
+                    <li class="divider-vertical"></li>
+                </ul>
+                <ul class="nav">
+                    <li><a href="/login"><i class="icon-home"></i> Sign In </a></li>
+                    <li><a href="/signup"><i class="icon-th-large"></i> Registration </a></li>
+                    <li><a href="/workspace/1"><i class=" icon-globe"></i> Workspace </a></li>
+                    <li><a href="/portfolio"><i class="icon-briefcase"></i> Portfolio </a></li>
+                    @username.map { user =>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                        data-toggle="dropdown"
+                        href="#"><i class="icon-user"></i>
+                            Account
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                               <li><a href="/account/@user"><i class="icon-eye-open"></i> @user</a></li>
+                               <li><a href="@routes.Application.logout()"><i class="icon-off"></i> logout</a></li>
+                        </ul>
+                    </li>
+                       @if(user.equals("admin")){
+                            <li><a href="/admin"><i class="icon-plus-sign"></i> Add stock </a></li>
+                       }
+                    }.getOrElse {
+
+                    }
+                    <li>
+                        <form class="navbar-search pull-right" action="@routes.Search.search()">
+                            <input type="text" id="query" name="query" class="search-query span2" placeholder="Search">
+                        </form>
+                    </li>
+                </ul>
+
+
+
+
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <div class="content">
+
+                <div class="page-header">
+                    <h1>@title</h1>
+                </div>
+
+                <div class="row">
+                    <div class="span14">
+                    @content
+                    </div>
+                </div>
+
+            </div>
+
+            <footer>
+                <p>
+                    <a href="http://www.com.jungleo.net/">www.com.jungleo.net</a>
+                </p>
+            </footer>
+
+        </div>
+
+
+    </body>
+</html>

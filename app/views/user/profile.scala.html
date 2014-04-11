@@ -1,0 +1,50 @@
+@(user: UserViewFullProfile, name: Option[String])
+
+@main(Html("User profile"), name) {
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>User name</th>
+                <th>Country</th>
+                <th>Gender</th>
+                <th>Professional</th>
+                @if(name.isDefined){
+                    <th>Confirmed</th>
+                }
+            </tr>
+
+            <tr row-key="@user.id">
+                <td>@user.username</td>
+                <td><div>@user.profile.country.getOrElse(<em>Not specified</em>)</div></td>
+                <td><div>@user.profile.gender.getOrElse(<em>Not specified</em>)</div></td>
+                <td><div>@user.profile.professional.getOrElse(<em>Not specified</em>)</div></td>
+                @if(name.isDefined){
+                    <th>@user.verified</th>
+                }
+            </tr>
+
+        </tbody>
+    </table>
+    @if(user.portfolio.assets.size > 0) {
+        <table class="table table-bordered">
+            <tr>
+                <th>Symbol</th>
+                <th>Title</th>
+                <th>Region</th>
+                <th>Sector</th>
+                <th>Price</th>
+                <th>Amount</th>
+            </tr>
+            @user.portfolio.assets.map { asset =>
+                <tr>
+                    <td>@asset.symbol</td>
+                    <td>@TradingObject.findBySymbol(asset.symbol).get.title</td>
+                    <td>@Region.find(TradingObject.findBySymbol(asset.symbol).get.regionId).get.title</td>
+                    <td>@Sector.find(TradingObject.findBySymbol(asset.symbol).get.sectorId).get.title</td>
+                    <td>@TradingObject.findStockBySymbol(asset.symbol).get.price</td>
+                    <td>@asset.amount</td>
+                </tr>
+            }
+        </table>
+    }
+}

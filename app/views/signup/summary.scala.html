@@ -1,0 +1,50 @@
+@(user: User)
+
+@main(Html("Account created!"), None) {
+
+    <h2>Your account:</h2>
+
+    <h6>Username</h6>
+
+    <p>
+        @user.username
+    </p>
+
+    <h6>Email</h6>
+
+    <p>
+        @user.email
+    </p>
+
+    <h6>Full name</h6>
+
+    <p>
+        @user.fullName
+    </p>
+
+    <h6>Is confirmed</h6>
+
+    <p>
+    @user.confirmed
+    </p>
+
+
+    <h6>Country</h6>
+
+    <p>
+        @user.profile.country.getOrElse { <em>Not specified</em> }
+    </p>
+
+    <h6>Gender</h6>
+
+    <p>
+        @user.profile.gender.getOrElse { <em>Not specified</em> }
+    </p>
+
+    <h6>Age</h6>
+
+    <p>
+        @user.profile.age.getOrElse { <em>Not specified</em> }
+    </p>
+
+}

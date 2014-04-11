@@ -1,0 +1,63 @@
+@(addForm: Form[(String, String, Int, Int)], username:Option[String], list:List[TradingObject])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(Html("Admin page"), username) {
+
+    <div class="container">
+
+        <div class="well offset3" style="width : 300px">
+            <legend>Add new stock </legend>
+            @form(action = routes.Admin.add())  {
+                <div>
+                @addForm.globalError match {
+                    case Some(err: FormError) => {<div class="alert alert-error">@err.message </div>}
+                    case _ => {}
+                }
+                </div>
+                <fieldset>
+                    <input type="text" placeholder="symbol" name="symbol" id="symbol"  ><br>
+                    <input type="text"  placeholder="title" name="title" id="title" >
+                    <select name="regionId" id="regionId">
+                        @for((key, value) <- Region.regionOptions) {
+                            <option value="@key">@value.title</option>
+                        }
+                    </select>
+                    <select name="sectorId" id="sectorId">
+                        @for((key, value) <- Sector.sectorOptions) {
+                            <option value="@key">@value.title</option>
+                        }
+                    </select>
+                </fieldset>
+                <button type="submit" name="submit" class="btn btn-success btn-block" >add</button>
+            }
+          </div>
+    </div>
+    <table id="stocks" class="table table-bordered" style="width: 820px;">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Region</th>
+            <th>Sector</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+       @for(to <- list){
+            <tr>
+                <td>
+                    @to.id
+                </td>
+
+                <td><a href="@routes.Workspace.stock(to.stock.symbol)">@to.title</a></td>
+                <td>@Region.find(to.regionId).get.title</td>
+                <td>@Sector.find(to.sectorId).get.title</td>
+                <td >@to.stock.symbol</td>
+                <td id="color@to.stock.symbol"><div id="price@to.stock.symbol">@to.stock.price</div></td>
+                <td><a class="btn btn-danger" href="@routes.Admin.delete(to.stock.symbol)">Delete</a></td>
+            </tr>
+        }
+    </table>
+
+}

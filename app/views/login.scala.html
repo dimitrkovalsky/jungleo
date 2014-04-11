@@ -1,0 +1,32 @@
+@(loginForm: Form[(String, String)], user:Option[String])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main(Html("Jungle O"), user) {
+    <div class="container" style="margin-top: 100px; margin-bottom: 100px">
+
+        <div class="well offset3" style="width : 300px">
+            <legend>Login or <a href="/signup">Sign Up </a></legend>
+
+
+            @form(routes.Application.authenticate())  {
+                <div>
+                    @loginForm.globalError match {
+                        case Some(err: FormError) => {<div class="alert alert-error">@err.message </div>}
+                        case _ => {}
+                    }
+                </div>
+                <fieldset>
+                <input type="text" class="span3" placeholder="username" name="username" id="username"  style="width: 285px;"><br>
+                <input type="password" class="span3" placeholder="password" name="password" id="password"  style="width: 285px;">
+                </fieldset>
+                <button type="submit" name="submit" class="btn btn-success btn-block span2" style="margin-left: 0px">Authentication</button>
+            }
+        </div>
+
+    </div>
+
+}
+
+

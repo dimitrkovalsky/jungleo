@@ -1,0 +1,49 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+# Home page
+GET         /                                                 controllers.Application.index
+
+# Authentication
+GET         /login                                            controllers.Application.login
+POST        /login                                            controllers.Application.authenticate
+GET         /logout                                           controllers.Application.logout
+GET         /verification/:id                                 controllers.SignUp.verification(id)
+
+# search
+
+GET         /search                                           controllers.Search.search
+GET         /error                                            controllers.Application.error(message)
+GET         /user/:id                                         controllers.Search.user(id)
+GET         /account/:username                                controllers.Search.account(username)
+
+# Workspace
+GET         /workspace/search/:page                           controllers.Workspace.search(page)
+GET         /workspace/:page                                  controllers.Workspace.workspace(page)
+GET         /portfolio                                        controllers.Workspace.portfolio
+GET         /workspace/buy/:symbol                            controllers.Workspace.buy(symbol)
+GET         /workspace/stocks/:symbol                         controllers.Workspace.stock(symbol)
+GET         /workspace/sell/:symbol                           controllers.Workspace.sell(symbol)
+GET         /feed                                             controllers.Workspace.feed(name,currentPage,query)
+GET         /stock                                            controllers.Workspace.stockSocket(username,symbol)
+
+GET         /signup                                           controllers.SignUp.form
+POST        /signup                                           controllers.SignUp.submit
+
+
+# Admin
+GET         /admin                                            controllers.Admin.admin
+POST        /admin/add                                        controllers.Admin.add
+GET         /admin/delete/:symbol                             controllers.Admin.delete(symbol)
+
+# Map Bootstrap images
+GET         /assets/img/glyphicons-halflings.png              controllers.Assets.at(path="/public", file="/images/glyphicons-halflings.png")
+GET         /assets/img/glyphicons-halflings-white.png        controllers.Assets.at(path="/public", file="/images/glyphicons-halflings-white.png")
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                                     controllers.Assets.at(path="/public", file)
+
+

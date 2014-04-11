@@ -1,0 +1,23 @@
+@(username: String, portfolio: Portfolio)
+@main(Html("Workspace"), Some(username)) {
+    <table class="table table-bordered">
+        <tr>
+            <th>Symbol</th>
+            <th>Title</th>
+            <th>Region</th>
+            <th>Sector</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        @portfolio.assets.map { asset =>
+            <tr>
+                <td>@asset.symbol</td>
+                <td>@TradingObject.findBySymbol(asset.symbol).get.title</td>
+                <td>@Region.find(TradingObject.findBySymbol(asset.symbol).get.regionId).get.title</td>
+                <td>@Sector.find(TradingObject.findBySymbol(asset.symbol).get.sectorId).get.title</td>
+                <td>@TradingObject.findStockBySymbol(asset.symbol).get.price</td>
+                <td><a class="btn btn-danger" href="@routes.Workspace.sell(asset.symbol)">Sell</a></td>
+            </tr>
+        }
+    </table>
+}
